@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "DEBUG='cfgram*' jest",
-    "start": "DEBUG='cfgram*' node server.js"
+    "test": "DEBUG='instaclone*' jest",
+    "start": "DEBUG='instaclone*' node server.js"
   },
   "keywords": [],
   "author": "",
