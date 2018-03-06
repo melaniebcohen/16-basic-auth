@@ -1,9 +1,7 @@
 'use strict';
 
 const request = require('superagent');
-const mongoose = require('mongoose');
 const serverToggle = require('../lib/server-toggle.js');
-const Promise = require('bluebird');
 const server = require('../server.js');
 
 const User = require('../model/user.js');
@@ -43,7 +41,7 @@ describe('Gallery Routes', function() {
         })
         .catch(done);
     });
-    it('should return a gallery', done => {
+    it('with a valid body, should return a gallery', done => {
       request.post(`${url}/api/gallery`)
         .send(exampleGallery)
         .set({ Authorization: `Bearer ${this.tempToken}`})
@@ -56,8 +54,32 @@ describe('Gallery Routes', function() {
           done();
         });
     });
+    it('without a token, should return a 401 error', done => {
+      request.post(`${url}/api/gallery`)
+        .send(exampleGallery)
+        .end((err, res) => {
+          expect(res.status).toEqual(401);
+          expect(res.text).toEqual('UnauthorizedError');
+          done();
+        });
+    });
+    it('without a body or with an invalid body, should return a 400 error', done => {
+      request.post(`${url}/api/gallery`)
+        // .send(exampleGallery)
+        .set({ Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).toEqual(400);
+          expect(res.text).toEqual('BadRequestError');
+          done();
+        });
+    });
   });
 
+  /* GET TESTS:
+      - 200 for a request with a valid id
+      - 401 if no token was provided
+      - 404 if no body was provided or the body was invalid
+  */
   describe('GET: /api/gallery/:galleryId', () => {
     beforeEach( done => {
       new User(exampleUser)
@@ -96,4 +118,13 @@ describe('Gallery Routes', function() {
         });
     });
   });
+  /* PUT TESTS:
+      - 200 for a post request with a valid body
+      - 401 if no token was provided
+      - 400 if the body was invalid
+      - 404 for a valid request made with an id that was not found
+  */
+
+  // create a test to ensure that your API returns a status code of 404 for routes that have not been registered
+
 });

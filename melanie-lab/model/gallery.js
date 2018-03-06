@@ -1,7 +1,6 @@
 'use strict';
 
 const mongoose = require('mongoose');
-// const createError = require('http-errors');
 const debug = require('debug')('instaclone:user.js');
 
 const Schema = mongoose.Schema;
