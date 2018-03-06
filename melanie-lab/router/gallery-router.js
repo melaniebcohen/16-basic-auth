@@ -24,5 +24,5 @@ galleryRouter.get('/api/gallery/:galleryId', bearerAuth, function(req, res, next
 
   Gallery.findById(req.params.galleryId)
     .then( gallery => res.json(gallery))
-    .catch(next);
+    .catch( () => next());
 });

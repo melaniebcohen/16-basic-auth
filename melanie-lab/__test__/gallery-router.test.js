@@ -65,7 +65,6 @@ describe('Gallery Routes', function() {
     });
     it('without a body or with an invalid body, should return a 400 error', done => {
       request.post(`${url}/api/gallery`)
-        // .send(exampleGallery)
         .set({ Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           expect(res.status).toEqual(400);
@@ -75,11 +74,6 @@ describe('Gallery Routes', function() {
     });
   });
 
-  /* GET TESTS:
-      - 200 for a request with a valid id
-      - 401 if no token was provided
-      - 404 if no body was provided or the body was invalid
-  */
   describe('GET: /api/gallery/:galleryId', () => {
     beforeEach( done => {
       new User(exampleUser)
@@ -105,7 +99,7 @@ describe('Gallery Routes', function() {
         .catch(done);
     });
     afterEach( () => delete exampleGallery.userId );
-    it('should return a gallery', done => {
+    it('with a valid body, should return a gallery', done => {
       request.get(`${url}/api/gallery/${this.tempGallery._id}`)
         .set({ Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
@@ -114,6 +108,23 @@ describe('Gallery Routes', function() {
           expect(res.body.description).toEqual(exampleGallery.description);
           expect(res.body.name).toEqual(exampleGallery.name);
           expect(res.body.userId).toEqual(this.tempUser._id.toString());
+          done();
+        });
+    });
+    it('without a token, should return a 401 error', done => {
+      request.get(`${url}/api/gallery/${this.tempGallery._id}`)
+        .end((err, res) => {
+          expect(res.status).toEqual(401);
+          expect(res.text).toEqual('UnauthorizedError');
+          done();
+        });
+    });
+    it('for a valid request with id not found, should return a 404 error', done => {
+      request.get(`${url}/api/gallery/12345`)
+        .set({ Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).toEqual(404);
+          expect(typeof res).toEqual('object');
           done();
         });
     });
