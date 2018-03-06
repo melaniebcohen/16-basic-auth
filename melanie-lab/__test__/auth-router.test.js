@@ -8,12 +8,7 @@ const server = require('../server.js');
 require('jest');
 
 const url = `http://localhost:3000`;
-
-const exampleUser = {
-  username: 'test user',
-  password: 'boo123',
-  email: 'test@test.com',
-};
+const exampleUser = { username: 'test user', password: 'boo123', email: 'test@test.com' };
 
 describe('Auth Routes', function() {
   beforeAll( done => serverToggle.serverOn(server, done));
