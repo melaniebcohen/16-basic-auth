@@ -5,6 +5,7 @@ const debug = require('debug')('instaclone:auth-router.js');
 const Router = require('express').Router;
 const basicAuth = require('../lib/basic-auth-middleware.js');
 const User = require('../model/user.js');
+const createError = require('http-errors')
 
 const authRouter = module.exports = Router();
 
