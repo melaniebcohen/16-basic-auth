@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "DEBUG='instaclone*' jest",
-    "start": "DEBUG='instaclone*' node server.js"
+    "start": "DEBUG='instaclone*' node server.js",
+    "lint": "eslint"
   },
   "keywords": [],
   "author": "",
