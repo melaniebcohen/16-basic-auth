@@ -2,7 +2,7 @@
 
 const Router = require('express').Router;
 const jsonParser = require('body-parser').json();
-const createError = require('http-errors');
+// const createError = require('http-errors');
 const debug = require('debug')('instaclone:gallery-router');
 
 const Gallery = require('../model/gallery.js');
