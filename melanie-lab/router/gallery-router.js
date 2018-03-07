@@ -2,7 +2,7 @@
 
 const Router = require('express').Router;
 const jsonParser = require('body-parser').json();
-// const createError = require('http-errors');
+const createError = require('http-errors');
 const debug = require('debug')('instaclone:gallery-router');
 
 const Gallery = require('../model/gallery.js');
@@ -30,6 +30,9 @@ galleryRouter.get('/api/gallery/:galleryId', bearerAuth, (req, res, next) => {
 galleryRouter.put('/api/gallery/:galleryId', bearerAuth, jsonParser, (req, res, next) => {
   debug('PUT: /api/gallery/:galleryId');
   
+  if(!req.body.name) return next(createError(400, 'Bad Request'));
+  if(!req.body.description) return next(createError(400, 'Bad Request'));
+
   Gallery.findByIdAndUpdate(req.params.galleryId, req.body, { new: true })
     .then( gallery => res.json(gallery))
     .catch( () => next());
