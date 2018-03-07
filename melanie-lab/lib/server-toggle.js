@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 module.exports = exports = {};
 
-exports.serverOn = function(server, done) {
+exports.serverOn = (server, done) => {
   if (!server.isRunning) {
     server.listen(process.env.PORT, () => {
       server.isRunning = true;
@@ -17,7 +17,7 @@ exports.serverOn = function(server, done) {
   done();
 };
 
-exports.serverOff = function(server, done) {
+exports.serverOff = (server, done) => {
   if (server.isRunning) {
     server.close( err => {
       if (err) return done(err);

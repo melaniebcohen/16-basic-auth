@@ -6,7 +6,7 @@ const debug = require('debug')('instaclone:bearer-auth-middleware.js');
 
 const User = require('../model/user.js');
 
-module.exports = function(req, res, next) {
+module.exports = (req, res, next) => {
   debug('bearer auth');
 
   var authHeader = req.headers.authorization;

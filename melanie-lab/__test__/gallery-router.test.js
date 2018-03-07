@@ -99,6 +99,7 @@ describe('Gallery Routes', function() {
         .catch(done);
     });
     afterEach( () => delete exampleGallery.userId );
+    
     it('with a valid body, should return a gallery', done => {
       request.get(`${url}/api/gallery/${this.tempGallery._id}`)
         .set({ Authorization: `Bearer ${this.tempToken}`})
@@ -129,13 +130,87 @@ describe('Gallery Routes', function() {
         });
     });
   });
-  /* PUT TESTS:
-      - 200 for a post request with a valid body
-      - 401 if no token was provided
-      - 400 if the body was invalid
-      - 404 for a valid request made with an id that was not found
-  */
 
-  // create a test to ensure that your API returns a status code of 404 for routes that have not been registered
+  describe('PUT: /api/gallery/:galleryId', () => {
+    beforeEach( done => {
+      new User(exampleUser)
+        .generatePasswordHash(exampleUser.password)
+        .then( user => user.save())
+        .then( user => {
+          this.tempUser = user;
+          return user.generateToken();
+        })
+        .then( token => {
+          this.tempToken = token;
+          done();
+        })
+        .catch(done);
+    });
+    beforeEach( done => {
+      exampleGallery.userId = this.tempUser._id.toString();
+      new Gallery(exampleGallery).save()
+        .then( gallery => {
+          this.tempGallery = gallery;
+          done();
+        })
+        .catch(done);
+    });
+    afterEach( () => delete exampleGallery.userId );
 
+    it('with a valid body, should update a gallery', done => {
+      exampleGallery.name = 'Test Update';
+      request.put(`${url}/api/gallery/${this.tempGallery._id}`)
+        .send(exampleGallery)
+        .set({ Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).toEqual(200);
+          expect(res.body.description).toEqual(exampleGallery.description);
+          expect(res.body.name).toEqual(exampleGallery.name);
+          expect(res.body.userId).toEqual(this.tempUser._id.toString());
+          done();
+        });
+    });
+    it('without a token, should return a 401 error', done => {
+      request.put(`${url}/api/gallery/${this.tempGallery._id}`)
+        .send(exampleGallery)
+        .end((err, res) => {
+          expect(res.status).toEqual(401);
+          expect(res.text).toEqual('UnauthorizedError');
+          done();
+        });
+    });
+    it('for a valid request with id not found, should return a 404 error', done => {
+      request.put(`${url}/api/gallery/1234`)
+        .send(exampleGallery)
+        .set({ Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).toEqual(404);
+          done();
+        });
+    });
+    it('without a body or with an invalid body, should return a 400 error', done => {
+      request.put(`${url}/api/gallery/${this.tempGallery._id}`)
+        .set({ Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          console.log(res.text)
+          expect(res.text).toEqual('BadRequestError');
+          done();
+        });
+    });
+
+
+  });
+
+  describe('Unregistered Routes', () => {
+    it('unregistered routes should return a 404 error', done => {
+      request.get(`${url}/api/galery/`)
+        .set({ Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).toEqual(404);
+          expect(typeof res).toEqual('object');
+          done();
+        });
+    });
+  });
 });

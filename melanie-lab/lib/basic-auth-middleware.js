@@ -3,7 +3,7 @@
 const createError = require('http-errors');
 const debug = require('debug')('instaclone:basic-auth-middleware.js');
 
-module.exports = function(req, res, next) {
+module.exports = (req, res, next) => {
   debug('basic auth');
 
   var authHeader = req.headers.authorization;

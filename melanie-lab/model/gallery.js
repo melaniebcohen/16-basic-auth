@@ -1,9 +1,8 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const debug = require('debug')('instaclone:user.js');
-
 const Schema = mongoose.Schema;
+
 const gallerySchema = Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },

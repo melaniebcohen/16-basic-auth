@@ -3,7 +3,7 @@
 const createError = require('http-errors');
 const debug = require('debug')('instaclone:error-middleware');
 
-module.exports = function(err, req, res, next) {
+module.exports = (err, req, res, next) => {
   debug('error middleware');
 
   console.error('msg:',err.message);
@@ -24,6 +24,13 @@ module.exports = function(err, req, res, next) {
 
   if (err.message === 'data and salt arguments required') {
     err = createError(400, err.message);
+    res.status(err.status).send(err.name);
+    next();
+    return;
+  }
+
+  if (err.name === 'CastError') {
+    err = createError(404, err.message);
     res.status(err.status).send(err.name);
     next();
     return;

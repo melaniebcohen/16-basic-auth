@@ -10,7 +10,7 @@ const bearerAuth = require('../lib/bearer-auth-middleware.js');
 
 const galleryRouter = module.exports = Router();
 
-galleryRouter.post('/api/gallery', bearerAuth, jsonParser, function(req, res, next) {
+galleryRouter.post('/api/gallery', bearerAuth, jsonParser, (req, res, next) => {
   debug('POST: /api/gallery');
 
   req.body.userId = req.user._id;
@@ -19,10 +19,26 @@ galleryRouter.post('/api/gallery', bearerAuth, jsonParser, function(req, res, ne
     .catch(next);
 });
 
-galleryRouter.get('/api/gallery/:galleryId', bearerAuth, function(req, res, next) {
+galleryRouter.get('/api/gallery/:galleryId', bearerAuth, (req, res, next) => {
   debug('GET: /api/gallery/:galleryId');
 
   Gallery.findById(req.params.galleryId)
     .then( gallery => res.json(gallery))
     .catch( () => next());
+});
+
+galleryRouter.put('/api/gallery/:galleryId', bearerAuth, jsonParser, (req, res, next) => {
+  debug('PUT: /api/gallery/:galleryId');
+  
+  Gallery.findByIdAndUpdate(req.params.galleryId, req.body, { new: true })
+    .then( gallery => res.json(gallery))
+    .catch( () => next());
+});
+
+galleryRouter.delete('/api/gallery/:galleryId', bearerAuth, (req, res, next) => {
+  debug('DELETE: /api/gallery/:galleryId');
+
+  Gallery.findByIdAndRemove(req.params.galleryId, bearerAuth)
+    .then( () => res.text('Gallery deleted'))
+    .catch( err => next(err));
 });
