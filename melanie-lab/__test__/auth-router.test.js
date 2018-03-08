@@ -4,10 +4,11 @@ const request = require('superagent');
 const User = require('../model/user.js');
 const serverToggle = require('../lib/server-toggle.js');
 const server = require('../server.js');
+const PORT = process.env.PORT || 3000;
 
 require('jest');
 
-const url = `http://localhost:${process.env.PORT}`;
+const url = `http://localhost:${PORT}`;
 const exampleUser = { username: 'test user', password: 'boo123', email: 'test@test.com' };
 
 describe('Auth Routes', function() {

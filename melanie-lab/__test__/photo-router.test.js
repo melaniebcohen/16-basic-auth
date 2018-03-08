@@ -4,13 +4,14 @@ const request = require('superagent');
 const server = require('../server.js');
 const serverToggle = require('../lib/server-toggle.js');
 const path = require('path');
+const PORT = process.env.PORT || 3000;
 
 const User = require('../model/user.js');
 const Gallery = require('../model/gallery.js');
 const Photo = require('../model/photo.js');
 
 require('jest');
-const url = `http://localhost:${process.env.PORT}`;
+const url = `http://localhost:${PORT}`;
 
 const exampleUser = { username: 'embee', password: 'yoyoyo', email: 'embeecee@gmail.com' };
 const exampleGallery = { name: 'test gallery', description: 'Test gallery description' };
