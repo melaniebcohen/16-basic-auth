@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "DEBUG='instaclone*' jest",
+    "test": "DEBUG='instaclone*' jest -i",
     "coverage": "DEBUG='instaclone*' jest --coverage",
     "start": "DEBUG='instaclone*' node server.js",
     "lint": "eslint"
@@ -13,18 +13,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.206.0",
     "bcrypt": "^1.0.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "debug": "^3.1.0",
+    "del": "^3.0.0",
     "dotenv": "^5.0.1",
     "eslint": "^4.18.2",
     "express": "^4.16.2",
     "http-errors": "^1.6.2",
     "jsonwebtoken": "^8.2.0",
     "mongoose": "^5.0.8",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "multer": "^1.3.0"
   },
   "devDependencies": {
     "jest": "^22.4.2",
