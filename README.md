@@ -1,7 +1,7 @@
 ![cf](https://i.imgur.com/7v5ASc8.png) Lab 18: Asset Management
 ======
 
-[![Coverage Status](https://coveralls.io/repos/github/melaniebcohen/16-basic-auth/badge.svg?branch=master)](https://coveralls.io/github/melaniebcohen/16-basic-auth?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/melaniebcohen/16-basic-auth/badge.svg?branch=staging)](https://coveralls.io/github/melaniebcohen/16-basic-auth?branch=staging)
 
 ## Directory Structure
 * **README.md**
