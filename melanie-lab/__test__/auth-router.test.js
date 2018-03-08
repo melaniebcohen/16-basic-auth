@@ -7,7 +7,7 @@ const server = require('../server.js');
 
 require('jest');
 
-const url = `http://localhost:3000`;
+const url = `http://localhost:${process.env.PORT}`;
 const exampleUser = { username: 'test user', password: 'boo123', email: 'test@test.com' };
 
 describe('Auth Routes', function() {

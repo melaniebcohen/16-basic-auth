@@ -9,7 +9,7 @@ const Gallery = require('../model/gallery.js');
 
 require('jest');
 
-const url = `http://localhost:3000`;
+const url = `http://localhost:${process.env.PORT}`;
 const exampleUser = { username: 'embee', password: 'yoyoyo', email: 'embeecee@gmail.com' };
 const exampleGallery = { name: 'test gallery', description: 'Test gallery description' };
 
