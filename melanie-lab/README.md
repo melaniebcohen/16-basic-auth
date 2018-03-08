@@ -1,4 +1,4 @@
-![cf](https://i.imgur.com/7v5ASc8.png) Lab 17: Bearer Authentication
+![cf](https://i.imgur.com/7v5ASc8.png) Lab 18: Asset Management
 ======
 
 ## Directory Structure
@@ -8,15 +8,17 @@
 * **.eslintignore**
 * **package.json** - contains npm package config
   * a `lint` script has been configured for running eslint
-  * a `test` script has been configured for running jest
+  * a `test` script has been configured or running jest
   * a `start` script has been configured for running the server
 * **server.js** - runs the application
 * **model/** - contains resource model
   * **user.js**
   * **gallery.js**
+  * **photo.js**
 * **router/** - contains routes
   * **auth-router.js**
   * **gallery-router.js**
+  * **photo-router.js**
 * **lib/** - contains custom middleware and helpers
   * **basic-auth-middleware.js**
   * **bearer-auth-middleware.js**
@@ -25,6 +27,7 @@
 * **\_\_test\_\_/** - contains route tests
   * **auth-router.test.js**
   * **gallery-router.test.js**
+  * **photo-router.test.js**
 
 ## Installation
 1. To install this application, download the files from this repository
@@ -71,4 +74,11 @@
   * Passes data as stringified JSON to delete a resource
 ```
 /api/gallery/:galleryId
+```
+
+### Photo CRUD Functionality
+#### POST Request
+  * Uploads static photo file (in the test case, `porg.jpg` from a `data` folder) to AWS
+```
+/api/photo/:photoId
 ```
