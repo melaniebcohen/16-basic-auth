@@ -1,68 +1,86 @@
-![cf](https://i.imgur.com/7v5ASc8.png) Lab 16: Basic Authentication
+![cf](https://i.imgur.com/7v5ASc8.png) Lab 18: Asset Management
 ======
 
-## Submission Instructions
-* Work in a fork of this repository
-* Work in a branch on your fork
-* Write all of your code in a directory named `lab-` + `<your name>` **e.g.** `lab-susan`
-* Open a pull request to this repository
-* Submit on canvas a question and observation, how long you spent, and a link to your pull request
+[![Coverage Status](https://coveralls.io/repos/github/melaniebcohen/16-basic-auth/badge.svg?branch=staging)](https://coveralls.io/github/melaniebcohen/16-basic-auth?branch=staging)
 
-## Configuration 
-Configure the root of your repository with the following files and directories. Thoughtfully name and organize any additional configuration or module files.
-* **README.md** - contains documentation
-* **.gitignore** - contains a [robust](http://gitignore.io) `.gitignore` file 
-* **.eslintrc** - contains the course linter configuratoin
-* **.eslintignore** - contains the course linter ignore configuration
+## Directory Structure
+* **README.md**
+* **.gitignore**
+* **.eslintrc**
+* **.eslintignore**
 * **package.json** - contains npm package config
-  * create a `lint` script for running eslint
-  * create a `start` script for running your server
-  * create a `test` script for running your tests
-* **server.js** - runs your application
-* **model/** - contains mongoose schemas
-* **route/** - contains your routes
+  * a `lint` script has been configured for running eslint
+  * a `test` script has been configured or running jest
+  * a `start` script has been configured for running the server
+* **server.js** - runs the application
+* **model/** - contains resource model
+  * **user.js**
+  * **gallery.js**
+  * **photo.js**
+* **router/** - contains routes
+  * **auth-router.js**
+  * **gallery-router.js**
+  * **photo-router.js**
 * **lib/** - contains custom middleware and helpers
+  * **basic-auth-middleware.js**
+  * **bearer-auth-middleware.js**
+  * **error-middleware.js**
+  * **server-toggle.js**
 * **\_\_test\_\_/** - contains route tests
+  * **auth-router.test.js**
+  * **gallery-router.test.js**
+  * **photo-router.test.js**
 
-## Feature Tasks
-##### Minimum Requirements
-
-* create an HTTP server using `express`
-* using `mongoose`, create a **User** model with the following properties and options:
-  * `username` - *required and unique*
-  * `email` - *required and unique*
-  * `password` - *required - this must be hashed and can not stored as plain text*
-  * `findHash` - *unique*
-* use the **npm** `debug` module to log function calls that are used within your application
-* use the **express** `Router` to create a custom router for allowing users to **sign up** and **sign in**
-* use the **npm** `dotenv` module to house the following environment variables as part of your application:
-  * `PORT`
-  * `MONGODB_URI`
-  * `APP_SECRET` *(used for signing and verify tokens)*
+## Installation
+1. To install this application, download the files from this repository
+2. `cd` to the repository directory and run `npm i`
+3. Use `npm run start` or `node server.js` to start the server connection
+4. Alternatively, run `npm run test` to run tests
 
 ## Server Endpoints
-##### `/api/signup`
-* **POST** request
-  * should respond with a token (generated using `jwt`)
-  * should respond with **400 Bad Request** if the request failed
-  * should contain the username and password in the body of the request
+### User Creation & Authentication
+#### POST Request
+  * Responds with a token or **400 Bad Request** if the request failed
+  * Contains the username and password in the body of the request  
+```  
+/api/signup  
+```
 
-##### `/api/signin`
-* **GET** request
-* should respond with a token for authenticated users
-* should respond with **401 Unauthorized** for non-authenticated users
-* should contain the username and password using a `Basic:` authorization header
+#### GET Request
+  * Responds with a token for authenticated users or **401 Unauthorized** for non-authenticated users
+  * Contains the username and password using a `Basic:` authorization header
+```
+/api/signup
+```
 
-## Testing
+### Gallery CRUD Functionality
+#### POST Request
+  * Passes data as stringified JSON in the body of a POST request to create a new resource
+```
+/api/gallery
+```
 
-##### `/api/signup`
-* **POST** test **400**
-  * if no request body has been provided or the body is invalid
-* **POST** test **200**
-  * if the request body has been provided and is valid
+#### GET Request
+  * Passes id of a resource through the URL endpoint to req.params to fetch a resource
+```
+/api/gallery/:galleryId
+```
 
-##### `/api/signin`
-* **GET** test **401**
-  * if the user could not be authenticated
-* **GET** test **200**
-  * should respond with a token for a requests with a valid basic authorization header
+#### PUT Request
+  * Passes data as stringified JSON to update a resource
+```
+/api/gallery/:galleryId
+```
+
+#### GET Request
+  * Passes data as stringified JSON to delete a resource
+```
+/api/gallery/:galleryId
+```
+
+### Photo CRUD Functionality
+#### POST Request
+  * Uploads static photo file (in the test case, `porg.jpg` from a `data` folder) to AWS
+```
+/api/photo/:photoId
+```
