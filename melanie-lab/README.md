@@ -80,5 +80,5 @@
 #### POST Request
   * Uploads static photo file (in the test case, `porg.jpg` from a `data` folder) to AWS
 ```
-/api/photo/:photoId
+/api/gallery/:galleryId/photo/:photoId
 ```
